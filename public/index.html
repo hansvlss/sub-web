@@ -1,18 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <meta name="theme-color" content="#00142A">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1.0"
+    />
+    <meta name="theme-color" content="#00142A" />
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
     <title>sub-web</title>
   </head>
   <body>
     <noscript>
-      <strong>We're sorry but sub-web doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+      <strong>
+        We're sorry but sub-web doesn't work properly without JavaScript enabled.
+        Please enable it to continue.
+      </strong>
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+
+    <!-- ✅ 初始化默认后端地址，只在本地没保存时写入 -->
+    <script>
+      (function () {
+        var DEFAULT_BACKEND =
+          "<%= process.env.VUE_APP_SUBCONVERTER_DEFAULT_BACKEND %>";
+        try {
+          var KEY = "backend"; // sub-web 读取的 localStorage 键
+          if (DEFAULT_BACKEND && !localStorage.getItem(KEY)) {
+            localStorage.setItem(KEY, DEFAULT_BACKEND);
+            console.log("✅ 默认后端已写入:", DEFAULT_BACKEND);
+          } else {
+            console.log("ℹ️ 已存在后端:", localStorage.getItem(KEY));
+          }
+          window.__SUBWEB_DEFAULT_BACKEND__ = DEFAULT_BACKEND;
+        } catch (e) {
+          console.error("❌ 写入默认后端失败:", e);
+        }
+      })();
+    </script>
   </body>
 </html>
