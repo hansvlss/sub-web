@@ -34,9 +34,9 @@ module.exports = {
 
   // ✅ 强制覆盖默认 Service Worker 注入逻辑
   pwa: {
-    workboxPluginMode: 'InjectManifest',
-    workboxOptions: {
-      swSrc: 'public/empty-sw.js',
-    }
+  workboxPluginMode: 'InjectManifest',
+  workboxOptions: {
+    swSrc: './public/empty-sw.js',
   }
+}
 };
