@@ -459,21 +459,21 @@ export default {
             "&append_type=" + this.form.appendType.toString();
         }
 
-        this.customSubUrl +=
-          "&emoji=" +
-          this.form.emoji.toString() +
-          "&list=" +
-          this.form.nodeList.toString() +
-          "&tfo=" +
-          this.form.tfo.toString() +
-          "&scv=" +
-          this.form.scv.toString() +
-          "&fdn=" +
-          this.form.fdn.toString() +
-          "&expand=" +
-          this.form.expand.toString() +
-          "&sort=" +
-          this.form.sort.toString();
+      this.customSubUrl +=
+  "&emoji=" +
+  this.form.emoji.toString() +
+  // ✅ 仅在目标为 Clash 且后端支持时启用 list 参数
+  (this.form.clientType === "clash" ? "&list=" + this.form.nodeList.toString() : "") +
+  "&tfo=" +
+  this.form.tfo.toString() +
+  "&scv=" +
+  this.form.scv.toString() +
+  "&fdn=" +
+  this.form.fdn.toString() +
+  "&expand=" +
+  this.form.expand.toString() +
+  "&sort=" +
+  this.form.sort.toString();
 
         if (this.needUdp) {
           this.customSubUrl += "&udp=" + this.form.udp.toString()
