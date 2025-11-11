@@ -5,7 +5,7 @@ function resolve(dir) {
 }
 
 module.exports = {
-  publicPath: './', // ✅ 防止空白页
+  publicPath: './',
 
   css: {
     loaderOptions: {
@@ -36,6 +36,6 @@ module.exports = {
     console.log('=================');
   },
 
-  // ✅ 完全禁用 PWA 插件
-  pwa: false
+  // ✅ 这里改成空对象，禁用 PWA 插件逻辑但保持合法格式
+  pwa: {}
 };
