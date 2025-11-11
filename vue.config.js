@@ -33,10 +33,12 @@ module.exports = {
   },
 
   // ✅ 强制覆盖默认 Service Worker 注入逻辑
-  pwa: {
-  workboxPluginMode: 'InjectManifest',
+pwa: {
+  workboxPluginMode: 'GenerateSW',
   workboxOptions: {
-    swSrc: './public/empty-sw.js',
+    skipWaiting: true,
+    clientsClaim: true,
+    exclude: [/\.map$/, /_redirects/]
   }
 }
 };
