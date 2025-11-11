@@ -30,12 +30,13 @@ module.exports = {
       .loader('svg-sprite-loader')
       .options({ symbolId: 'icon-[name]' })
       .end();
-
-    console.log('=== ENV CHECK ===');
-    console.log(process.env);
-    console.log('=================');
   },
 
-  // ✅ 这里改成空对象，禁用 PWA 插件逻辑但保持合法格式
-  pwa: {}
+  // ✅ 强制覆盖默认 Service Worker 注入逻辑
+  pwa: {
+    workboxPluginMode: 'InjectManifest',
+    workboxOptions: {
+      swSrc: 'public/empty-sw.js',
+    }
+  }
 };
