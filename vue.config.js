@@ -1,10 +1,12 @@
-const path = require('path')
+const path = require('path');
 
 function resolve(dir) {
-  return path.join(__dirname, dir)
+  return path.join(__dirname, dir);
 }
 
 module.exports = {
+  publicPath: './', // ✅ 保证相对路径构建，防止空白页
+
   css: {
     loaderOptions: {
       less: {
@@ -14,11 +16,11 @@ module.exports = {
   },
 
   chainWebpack: config => {
-    // set svg-sprite-loader
+    // ✅ set svg-sprite-loader
     config.module
       .rule('svg')
       .exclude.add(resolve('src/icons'))
-      .end()
+      .end();
     config.module
       .rule('icons')
       .test(/\.svg$/)
@@ -29,19 +31,20 @@ module.exports = {
       .options({
         symbolId: 'icon-[name]'
       })
-      .end()
+      .end();
+
+    // ✅ 输出环境变量日志（构建时会打印到 Netlify 日志）
+    console.log('=== Vue CLI ENV CHECK START ===');
+    console.log(process.env);
+    console.log('=== Vue CLI ENV CHECK END ===');
   },
 
+  // ✅ 禁用 PWA，防止 Netlify 出现 "unsupported MIME type" 报错
   pwa: {
+    workboxPluginMode: 'GenerateSW',
     workboxOptions: {
-      // https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin
-      skipWaiting: true,
-      clientsClaim: true,
-      importScripts: [
-        'https://storage.googleapis.com/workbox-cdn/releases/6.4.1/workbox-sw.js'
-      ],
-      navigateFallback: '/',
-      navigateFallbackDenylist: [/\/api\//]
+      skipWaiting: false, // 禁用自动更新 SW
+      clientsClaim: false
     }
   }
 };
