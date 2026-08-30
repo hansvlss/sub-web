@@ -1,7 +1,7 @@
 <template>
   <div id="top" class="subconverter-page">
     <section class="converter-hero">
-      <h1>一个清晰的订阅转换工具</h1>
+      <h1>在线订阅转换工具</h1>
       <p>支持 Clash、sing-box、Surge、Quantumult X 等客户端格式，快速生成可用订阅链接。</p>
     </section>
     <el-row id="converter" class="converter-shell">
@@ -384,7 +384,7 @@ export default {
     };
   },
   created() {
-    document.title = "Subscription Converter";
+    document.title = "在线订阅转换工具";
     this.isPC = this.$getOS().isPc;
 
     // 获取 url cache

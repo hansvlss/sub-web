@@ -4,7 +4,7 @@
       <div class="site-header__inner">
         <a class="site-brand" href="#top">
           <span class="site-brand__mark">H</span>
-          <span>Hans 节点转换</span>
+          <span>在线订阅转换工具</span>
         </a>
         <nav class="site-nav" aria-label="主导航">
           <a class="is-active" href="#converter">转换工具</a>
@@ -15,7 +15,7 @@
     </header>
     <main><router-view/></main>
     <footer class="site-footer">
-      <div><strong>Hans 节点转换</strong><span>专注订阅链接转换，简洁、清晰。</span></div>
+      <div><strong>在线订阅转换工具</strong><span>专注订阅链接转换，简洁、清晰。</span></div>
       <p>订阅链接可能包含个人配置信息，请勿公开分享。</p>
     </footer>
   </div>
