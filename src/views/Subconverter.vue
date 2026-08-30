@@ -1,8 +1,8 @@
 <template>
   <div id="top" class="subconverter-page">
     <section class="converter-hero">
-      <h1>在线订阅转换工具</h1>
-      <p>支持 Clash、sing-box、Surge、Quantumult X 等客户端格式，快速生成可用订阅链接。</p>
+      <h1>在线订阅转换工具 最新版</h1>
+      <p>粘贴订阅、选择客户端，一键生成适合 OpenClash、Mihomo、Surge、QuanX 等客户端使用的订阅链接。</p>
     </section>
     <el-row id="converter" class="converter-shell">
       <el-col>
