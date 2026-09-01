@@ -4,36 +4,41 @@
       <h1>在线订阅转换工具 最新版</h1>
       <p>粘贴订阅、选择客户端，一键生成适合 OpenClash、Mihomo、Surge、QuanX 等客户端使用的订阅链接。</p>
     </section>
+    <section class="protocol-strip converter-shell" aria-label="支持的协议">
+      <strong>兼容常见协议</strong>
+      <div><span v-for="protocol in ['SS', 'SSR', 'VMess', 'VLESS', 'Trojan', 'Hysteria2', 'TUIC', 'AnyTLS', 'Socks5', 'HTTP/HTTPS']" :key="protocol">{{ protocol }}</span></div>
+    </section>
     <el-row id="converter" class="converter-shell">
       <el-col>
         <el-card class="converter-card" shadow="never">
           <el-container>
             <el-form class="converter-form" :model="form" label-position="top">
-              <el-form-item class="mode-switch" label="模式">
-                <el-radio v-model="advanced" label="1">基础模式</el-radio>
-                <el-radio v-model="advanced" label="2">进阶模式</el-radio>
-              </el-form-item>
-              <el-form-item label="订阅链接">
+              <div class="step-heading"><span>1</span><div><strong>添加订阅链接</strong><small>支持单个或多个订阅，多个链接可换行填写</small></div></div>
+              <el-form-item>
                 <el-input v-model="form.sourceSubUrl" type="textarea" rows="4" maxlength="5000" show-word-limit
                   placeholder="支持订阅或ss/ssr/vmess链接，多个链接每行一个或用 | 分隔" @blur="saveSubUrl" />
               </el-form-item>
+              <p class="form-notice"><i class="el-icon-warning-outline" /> 订阅链接可能包含个人配置，请勿在公开场合分享。</p>
+
+              <div class="step-heading"><span>2</span><div><strong>选择输出格式</strong><small>按实际使用的客户端选择目标格式和转换模板</small></div></div>
               <div class="converter-basic-grid">
                 <el-form-item label="目标客户端">
                   <el-select v-model="form.clientType" style="width: 100%">
                     <el-option v-for="(v, k) in options.clientTypes" :key="k" :label="k" :value="v"></el-option>
                   </el-select>
                 </el-form-item>
-                <el-form-item label="远程配置（可选）">
+                <el-form-item label="转换模板（可选）">
                   <el-select v-model="form.remoteConfig" clearable filterable placeholder="默认配置" style="width: 100%">
                     <el-option-group v-for="group in options.remoteConfig" :key="group.label" :label="group.label">
                       <el-option v-for="item in group.options" :key="item.value" :label="item.label" :value="item.value" />
                     </el-option-group>
                   </el-select>
                 </el-form-item>
-                <el-form-item label="文件名（可选）">
-                  <el-input v-model="form.filename" placeholder="例如：我的订阅" />
-                </el-form-item>
               </div>
+
+              <button class="advanced-toggle" type="button" @click="advanced = advanced === '2' ? '1' : '2'">
+                <span><i class="el-icon-setting" /> 高级设置</span><i :class="advanced === '2' ? 'el-icon-arrow-up' : 'el-icon-arrow-down'" />
+              </button>
 
               <div v-if="advanced === '2'" class="converter-advanced">
                 <el-form-item label="后端地址:">
@@ -47,6 +52,9 @@
                 </el-form-item>
                 <el-form-item label="Exclude:">
                   <el-input v-model="form.excludeRemarks" placeholder="节点名不包含的关键字，支持正则" />
+                </el-form-item>
+                <el-form-item label="文件名（可选）">
+                  <el-input v-model="form.filename" placeholder="例如：我的订阅" />
                 </el-form-item>
 
                 <el-form-item v-for="(param, i) in customParams" :key="i">
@@ -109,62 +117,31 @@
                 </el-form-item>
               </div>
 
-              <el-button class="generate-button" type="primary" icon="el-icon-magic-stick" @click="makeUrl"
-                :disabled="form.sourceSubUrl.length === 0">生成订阅</el-button>
-
-              <el-divider class="converter-divider" />
-
-              <el-form-item label="订阅链接">
+              <div class="step-heading step-heading--result"><span>3</span><div><strong>生成转换链接</strong><small>确认设置后生成结果，再复制到客户端使用</small></div></div>
+              <div class="generate-actions">
+                <el-button class="generate-button" type="primary" @click="makeUrl" :disabled="form.sourceSubUrl.length === 0">生成订阅链接</el-button>
+                <el-button plain @click="clearForm">清空</el-button>
+              </div>
+              <el-form-item class="result-field" label="转换结果">
                 <el-input class="copy-content" disabled v-model="customSubUrl">
                   <el-button slot="append" v-clipboard:copy="customSubUrl" v-clipboard:success="onCopy" ref="copy-btn"
                     icon="el-icon-document-copy">复制</el-button>
                 </el-input>
               </el-form-item>
-              <el-form-item label="短链接">
-                <el-input class="copy-content" disabled v-model="curtomShortSubUrl">
-                  <el-button slot="append" v-clipboard:copy="curtomShortSubUrl" v-clipboard:success="onCopy"
-                    ref="copy-btn" icon="el-icon-document-copy">复制</el-button>
-                </el-input>
-              </el-form-item>
-
-              <el-form-item class="converter-actions" label-width="0px">
-                <el-button plain @click="makeShortUrl" :loading="loading"
-                  :disabled="customSubUrl.length === 0">生成短链接</el-button>
-              </el-form-item>
-              <p class="privacy-note"><i class="el-icon-info" /> 订阅链接可能包含个人配置或节点信息，请勿公开分享给不信任的人。</p>
             </el-form>
           </el-container>
         </el-card>
       </el-col>
     </el-row>
 
-    <section id="clients" class="content-section converter-shell">
-      <div class="section-heading"><h2>支持的客户端</h2><p>请从官方渠道获取客户端，并根据系统与架构选择版本。</p></div>
-      <div class="client-list">
-        <div v-for="client in clients" :key="client.name" class="client-row">
-          <div><strong>{{ client.name }}</strong><small>{{ client.note }}</small></div>
-          <span class="client-platform">{{ client.platform }}</span>
-          <a :href="client.url" target="_blank" rel="noopener noreferrer">官方来源 <i class="el-icon-top-right" /></a>
-        </div>
-      </div>
+    <section id="clients" class="compact-row converter-shell">
+      <strong>支持客户端</strong><span>Clash / OpenClash / Mihomo / sing-box / Surge / Quantumult X / Loon</span>
     </section>
-
-    <section class="content-section converter-shell checklist-section">
-      <div class="section-heading"><h2>转换前先确认</h2></div>
-      <ul>
-        <li>原订阅链接可以在对应客户端中正常使用。</li>
-        <li>目标客户端与所选输出格式一致。</li>
-        <li>需要筛选节点或调整规则时，再启用进阶模式。</li>
-        <li>转换后请在客户端中检查节点与规则是否符合预期。</li>
-      </ul>
-    </section>
-
-    <section id="help" class="content-section converter-shell faq-section">
-      <div class="section-heading"><h2>常见问题</h2></div>
+    <section id="help" class="compact-help converter-shell">
       <el-collapse accordion>
-        <el-collapse-item v-for="(item, index) in faqs" :key="item.question" :name="index">
-          <template slot="title">{{ item.question }}</template>
-          <p>{{ item.answer }}</p>
+        <el-collapse-item name="help">
+          <template slot="title">工具说明</template>
+          <p>转换结果是否可用取决于原订阅、转换后端、模板与目标客户端的兼容状态。请在客户端中检查节点和规则是否符合预期。</p>
         </el-collapse-item>
       </el-collapse>
     </section>
@@ -400,6 +377,11 @@ export default {
     onCopy() {
       this.$message.success("Copied!");
     },
+    clearForm() {
+      this.form.sourceSubUrl = "";
+      this.customSubUrl = "";
+      this.curtomShortSubUrl = "";
+    },
     goToProject() {
       window.open(project);
     },
@@ -463,11 +445,11 @@ export default {
         "&insert=" +
         this.form.insert;
 
+      if (this.form.remoteConfig) {
+        this.customSubUrl += "&config=" + encodeURIComponent(this.form.remoteConfig);
+      }
+
       if (this.advanced === "2") {
-        if (this.form.remoteConfig) {
-          this.customSubUrl +=
-            "&config=" + encodeURIComponent(this.form.remoteConfig);
-        }
         if (this.form.excludeRemarks) {
           this.customSubUrl +=
             "&exclude=" + encodeURIComponent(this.form.excludeRemarks);
@@ -1389,5 +1371,69 @@ export default {
   .subconverter-page .generate-button { width: 100%; min-width: 0; }
   .subconverter-page .content-section { margin-top: 16px; padding: 24px 18px; }
   .subconverter-page .client-row { grid-template-columns: 1fr; }
+}
+
+/* Option 1: focused three-step converter. */
+.subconverter-page { padding: 40px 20px 64px; background: #f5f9ff; }
+.subconverter-page .converter-hero {
+  width: min(1160px, 100%); margin-bottom: 18px; padding: 42px 28px;
+  color: #fff; background: #2776ed; border-radius: 16px;
+}
+.subconverter-page .converter-hero h1 { color: #fff; font-size: clamp(30px, 4vw, 42px); }
+.subconverter-page .converter-hero p { max-width: 780px; margin: 14px auto 0; color: #eaf3ff; line-height: 1.7; }
+.subconverter-page .protocol-strip {
+  display: flex; align-items: center; gap: 18px; margin-bottom: 18px; padding: 16px 20px;
+  color: #31527f; background: #eaf4ff; border: 1px solid #d3e8ff; border-radius: 12px;
+}
+.subconverter-page .protocol-strip strong { flex: 0 0 auto; font-size: 14px; }
+.subconverter-page .protocol-strip div { display: flex; flex-wrap: wrap; gap: 8px; }
+.subconverter-page .protocol-strip span { padding: 5px 10px; font-size: 12px; background: #fff; border: 1px solid #d8e7f8; border-radius: 999px; }
+.subconverter-page .converter-card { box-shadow: 0 14px 42px rgba(36, 79, 135, .08); }
+.subconverter-page .converter-form { padding: 38px 42px 42px; }
+.subconverter-page .step-heading { display: flex; align-items: center; gap: 13px; margin: 4px 0 20px; }
+.subconverter-page .step-heading > span {
+  display: grid; flex: 0 0 34px; width: 34px; height: 34px; place-items: center;
+  color: #fff; font-size: 14px; font-weight: 800; background: #2776ed; border-radius: 9px;
+}
+.subconverter-page .step-heading div { display: flex; flex-direction: column; gap: 3px; }
+.subconverter-page .step-heading strong { color: #172b4d; font-size: 17px; }
+.subconverter-page .step-heading small { color: #7b899f; font-size: 13px; }
+.subconverter-page .form-notice { margin: -4px 0 34px; color: #7b6325; font-size: 13px; }
+.subconverter-page .form-notice i { margin-right: 5px; }
+.subconverter-page .converter-basic-grid { grid-template-columns: 1fr 1fr; }
+.subconverter-page .advanced-toggle {
+  display: flex; align-items: center; justify-content: space-between; width: 100%; margin: 4px 0 32px; padding: 14px 16px;
+  color: #3d4f69; font: inherit; font-size: 14px; font-weight: 700; text-align: left; cursor: pointer;
+  background: #f7f9fc; border: 1px solid #e0e6ee; border-radius: 9px;
+}
+.subconverter-page .advanced-toggle:hover { color: #2776ed; border-color: #b9d5fb; }
+.subconverter-page .advanced-toggle span i { margin-right: 7px; }
+.subconverter-page .converter-advanced { margin: -18px 0 30px; padding: 22px; background: #f8fbff; border: 1px solid #e1eaf5; border-radius: 10px; }
+.subconverter-page .step-heading--result { margin-top: 0; }
+.subconverter-page .generate-actions { display: flex; gap: 10px; margin: 0 0 24px 47px; }
+.subconverter-page .generate-button { width: 230px; min-width: 0; height: 44px; margin: 0; box-shadow: none; }
+.subconverter-page .generate-actions .el-button + .el-button { margin-left: 0; }
+.subconverter-page .result-field { margin: 0 0 0 47px; }
+.subconverter-page .compact-row {
+  display: flex; align-items: center; gap: 22px; margin-top: 18px; padding: 20px 24px;
+  color: #66758c; font-size: 14px; background: #fff; border: 1px solid #e1e8f0; border-radius: 12px;
+}
+.subconverter-page .compact-row strong { flex: 0 0 auto; color: #213654; }
+.subconverter-page .compact-help { margin-top: 12px; padding: 0 22px; background: #fff; border: 1px solid #e1e8f0; border-radius: 12px; }
+.subconverter-page .compact-help .el-collapse { border: 0; }
+.subconverter-page .compact-help .el-collapse-item__wrap { border-bottom: 0; }
+.subconverter-page .compact-help p { margin: 0; color: #65758b; line-height: 1.8; }
+@media (max-width: 700px) {
+  .subconverter-page { padding: 20px 10px 42px; }
+  .subconverter-page .converter-hero { padding: 30px 18px; border-radius: 12px; }
+  .subconverter-page .converter-hero h1 { font-size: 28px; }
+  .subconverter-page .protocol-strip { align-items: flex-start; flex-direction: column; gap: 10px; padding: 14px; }
+  .subconverter-page .converter-form { padding: 24px 16px 28px; }
+  .subconverter-page .step-heading small { line-height: 1.5; }
+  .subconverter-page .converter-basic-grid { grid-template-columns: 1fr; }
+  .subconverter-page .generate-actions { margin-left: 0; }
+  .subconverter-page .generate-button { flex: 1; width: auto; }
+  .subconverter-page .result-field { margin-left: 0; }
+  .subconverter-page .compact-row { align-items: flex-start; flex-direction: column; gap: 8px; }
 }
 </style>
