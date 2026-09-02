@@ -1,7 +1,7 @@
 <template>
   <div id="top" class="subconverter-page">
     <section class="converter-hero">
-      <h1>在线订阅转换工具 最新版</h1>
+      <h1>在线订阅转换工具</h1>
       <p>粘贴订阅、选择客户端，一键生成适合 OpenClash、Mihomo、Surge、QuanX 等客户端使用的订阅链接。</p>
     </section>
     <section class="protocol-strip converter-shell" aria-label="支持的协议">
@@ -361,7 +361,7 @@ export default {
     };
   },
   created() {
-    document.title = "在线订阅转换工具";
+    document.title = "在线订阅转换工具 - SubWeb";
     this.isPC = this.$getOS().isPc;
 
     // 获取 url cache
@@ -1376,10 +1376,10 @@ export default {
 /* Option 1: focused three-step converter. */
 .subconverter-page { padding: 40px 20px 64px; background: #f5f9ff; }
 .subconverter-page .converter-hero {
-  width: min(1160px, 100%); margin-bottom: 18px; padding: 42px 28px;
+  width: min(1160px, 100%); margin-bottom: 18px; padding: 30px 28px;
   color: #fff; background: #2776ed; border-radius: 16px;
 }
-.subconverter-page .converter-hero h1 { color: #fff; font-size: clamp(30px, 4vw, 42px); }
+.subconverter-page .converter-hero h1 { color: #fff; font-size: clamp(28px, 3.5vw, 36px); }
 .subconverter-page .converter-hero p { max-width: 780px; margin: 14px auto 0; color: #eaf3ff; line-height: 1.7; }
 .subconverter-page .protocol-strip {
   display: flex; align-items: center; gap: 18px; margin-bottom: 18px; padding: 16px 20px;
@@ -1425,8 +1425,8 @@ export default {
 .subconverter-page .compact-help p { margin: 0; color: #65758b; line-height: 1.8; }
 @media (max-width: 700px) {
   .subconverter-page { padding: 20px 10px 42px; }
-  .subconverter-page .converter-hero { padding: 30px 18px; border-radius: 12px; }
-  .subconverter-page .converter-hero h1 { font-size: 28px; }
+  .subconverter-page .converter-hero { padding: 24px 18px; border-radius: 12px; }
+  .subconverter-page .converter-hero h1 { font-size: 26px; }
   .subconverter-page .protocol-strip { align-items: flex-start; flex-direction: column; gap: 10px; padding: 14px; }
   .subconverter-page .converter-form { padding: 24px 16px 28px; }
   .subconverter-page .step-heading small { line-height: 1.5; }
