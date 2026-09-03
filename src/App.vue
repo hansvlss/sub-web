@@ -1,6 +1,6 @@
 <template>
-  <div id="app">
-    <header class="site-header">
+  <div id="app" :class="{ 'is-embedded': embedded }">
+    <header v-if="!embedded" class="site-header">
       <div class="site-header__inner">
         <router-link class="site-brand" to="/">
           <img class="site-brand__mark" src="/img/subweb-mark-192.png" alt="" aria-hidden="true">
@@ -14,7 +14,7 @@
       </div>
     </header>
     <main><router-view/></main>
-    <footer class="site-footer">
+    <footer v-if="!embedded" class="site-footer">
       <div class="site-footer__inner">
         <div><strong>SubWeb</strong><span>简单实用的代理网络工具站</span></div>
         <nav aria-label="页尾导航"><router-link to="/">转换工具</router-link><router-link to="/clients">支持客户端</router-link><router-link to="/help">使用说明</router-link></nav>
@@ -23,10 +23,19 @@
   </div>
 </template>
 
+<script>
+export default {
+  computed: {
+    embedded() { return this.$route.query.embed === "1"; }
+  }
+};
+</script>
+
 <style>
 html, body { margin: 0; background: #f5f9ff; }
 body { color: #1f2329; font-family: Poppins, "Noto Sans SC", "PingFang SC", sans-serif; }
 #app { min-height: 100vh; background: #f5f9ff; }
+#app.is-embedded { min-height: 0; }
 .site-header { position: sticky; top: 0; z-index: 1000; background: rgba(255,255,255,.92); border-bottom: 1px solid #e8e9ec; backdrop-filter: blur(14px); }
 .site-header__inner { display: flex; align-items: center; justify-content: space-between; width: min(1180px, calc(100% - 32px)); min-height: 64px; margin: auto; }
 .site-brand { display: inline-flex; align-items: center; gap: 10px; color: #17191d; font-size: 17px; font-weight: 800; text-decoration: none; }
