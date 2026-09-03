@@ -9,7 +9,7 @@
         <nav class="site-nav" aria-label="主导航">
           <router-link exact to="/">转换工具</router-link>
           <router-link to="/clients">客户端推荐</router-link>
-          <router-link to="/#help">帮助</router-link>
+          <router-link to="/help">帮助</router-link>
         </nav>
       </div>
     </header>
@@ -17,7 +17,7 @@
     <footer class="site-footer">
       <div class="site-footer__inner">
         <div><strong>SubWeb</strong><span>简单实用的代理网络工具站</span></div>
-        <nav aria-label="页尾导航"><router-link to="/">转换工具</router-link><router-link to="/clients">支持客户端</router-link><router-link to="/#help">使用说明</router-link></nav>
+        <nav aria-label="页尾导航"><router-link to="/">转换工具</router-link><router-link to="/clients">支持客户端</router-link><router-link to="/help">使用说明</router-link></nav>
       </div>
     </footer>
   </div>
