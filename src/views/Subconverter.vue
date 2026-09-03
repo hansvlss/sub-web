@@ -1,6 +1,6 @@
 <template>
   <div id="top" class="subconverter-page">
-    <section v-if="!embedded" class="converter-hero">
+    <section class="converter-hero">
       <h1>在线订阅转换工具</h1>
       <p>粘贴订阅、选择客户端，一键生成适合 OpenClash、Mihomo、Surge、QuanX 等客户端使用的订阅链接。</p>
     </section>
@@ -134,10 +134,10 @@
       </el-col>
     </el-row>
 
-    <section v-if="!embedded" id="clients" class="compact-row converter-shell">
+    <section id="clients" class="compact-row converter-shell">
       <strong>支持客户端</strong><span>Clash / OpenClash / Mihomo / sing-box / Surge / Quantumult X / Loon</span>
     </section>
-    <section v-if="!embedded" id="help" class="compact-help converter-shell">
+    <section id="help" class="compact-help converter-shell">
       <el-collapse accordion>
         <el-collapse-item name="help">
           <template slot="title">工具说明</template>
@@ -372,9 +372,6 @@ export default {
   mounted() {
     this.form.clientType = "clash";
     this.getBackendVersion();
-  },
-  computed: {
-    embedded() { return this.$route.query.embed === "1"; }
   },
   methods: {
     onCopy() {
@@ -1378,7 +1375,6 @@ export default {
 
 /* Option 1: focused three-step converter. */
 .subconverter-page { padding: 40px 20px 64px; background: #f5f9ff; }
-.is-embedded .subconverter-page { min-height: 0; padding: 0; }
 .subconverter-page .converter-hero {
   width: min(1160px, 100%); margin-bottom: 18px; padding: 30px 28px;
   color: #fff; background: #2776ed; border-radius: 16px;

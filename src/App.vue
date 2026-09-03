@@ -14,7 +14,7 @@
       </div>
     </header>
     <main><router-view/></main>
-    <footer v-if="!embedded" class="site-footer">
+    <footer class="site-footer">
       <div class="site-footer__inner">
         <div><strong>SubWeb</strong><span>简单实用的代理网络工具站</span></div>
         <nav aria-label="页尾导航"><router-link to="/">转换工具</router-link><router-link to="/clients">支持客户端</router-link><router-link to="/help">使用说明</router-link></nav>
