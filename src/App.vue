@@ -32,19 +32,8 @@ export default {
     if (!this.embedded) return;
     document.documentElement.classList.add("subweb-embedded");
     document.body.classList.add("subweb-embedded");
-    this.$nextTick(() => {
-      const root = document.getElementById("app");
-      const resizeParent = () => window.parent.postMessage({
-        type: "subweb:height",
-        height: Math.ceil(root.getBoundingClientRect().height)
-      }, "*");
-      this.embedObserver = new ResizeObserver(resizeParent);
-      this.embedObserver.observe(root);
-      resizeParent();
-    });
   },
   beforeDestroy() {
-    if (this.embedObserver) this.embedObserver.disconnect();
     document.documentElement.classList.remove("subweb-embedded");
     document.body.classList.remove("subweb-embedded");
   }
@@ -59,7 +48,6 @@ body { color: #1f2329; font-family: Poppins, "Noto Sans SC", "PingFang SC", sans
 #app.is-embedded { min-height: 0; }
 .is-embedded, .is-embedded .subconverter-page { background: #fff; }
 .is-embedded .subconverter-page { min-height: 0; }
-#app.is-embedded .subconverter-page .converter-card { border: 0 !important; box-shadow: none !important; }
 .site-header { position: sticky; top: 0; z-index: 1000; background: rgba(255,255,255,.92); border-bottom: 1px solid #e8e9ec; backdrop-filter: blur(14px); }
 .site-header__inner { display: flex; align-items: center; justify-content: space-between; width: min(1180px, calc(100% - 32px)); min-height: 64px; margin: auto; }
 .site-brand { display: inline-flex; align-items: center; gap: 10px; color: #17191d; font-size: 17px; font-weight: 800; text-decoration: none; }
