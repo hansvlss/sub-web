@@ -15,7 +15,8 @@
     </header>
     <main><router-view/></main>
     <footer class="site-footer">
-      <div class="site-footer__inner">
+      <p v-if="embedded" class="embedded-footer-note">请妥善保管订阅链接，并在客户端中确认转换结果。</p>
+      <div v-else class="site-footer__inner">
         <div><strong>SubWeb</strong><span>简单实用的代理网络工具站</span></div>
         <nav aria-label="页尾导航"><router-link to="/">转换工具</router-link><router-link to="/clients">支持客户端</router-link><router-link to="/help">使用说明</router-link></nav>
       </div>
@@ -48,6 +49,8 @@ body { color: #1f2329; font-family: Poppins, "Noto Sans SC", "PingFang SC", sans
 #app.is-embedded { min-height: 0; }
 .is-embedded, .is-embedded .subconverter-page { background: #fff; }
 .is-embedded .subconverter-page { min-height: 0; }
+#app.is-embedded .subconverter-page .converter-card { box-shadow: none !important; }
+.embedded-footer-note { width: min(1160px, calc(100% - 40px)); margin: 0 auto; padding: 24px 0 30px; color: #748198; font-size: 13px; text-align: center; }
 .site-header { position: sticky; top: 0; z-index: 1000; background: rgba(255,255,255,.92); border-bottom: 1px solid #e8e9ec; backdrop-filter: blur(14px); }
 .site-header__inner { display: flex; align-items: center; justify-content: space-between; width: min(1180px, calc(100% - 32px)); min-height: 64px; margin: auto; }
 .site-brand { display: inline-flex; align-items: center; gap: 10px; color: #17191d; font-size: 17px; font-weight: 800; text-decoration: none; }
