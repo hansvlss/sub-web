@@ -137,14 +137,6 @@
     <section id="clients" class="compact-row converter-shell">
       <strong>支持客户端</strong><span>Clash / OpenClash / Mihomo / sing-box / Surge / Quantumult X / Loon</span>
     </section>
-    <section id="help" class="compact-help converter-shell">
-      <el-collapse accordion>
-        <el-collapse-item name="help">
-          <template slot="title">工具说明</template>
-          <p>转换结果是否可用取决于原订阅、转换后端、模板与目标客户端的兼容状态。请在客户端中检查节点和规则是否符合预期。</p>
-        </el-collapse-item>
-      </el-collapse>
-    </section>
 
     <el-dialog :visible.sync="dialogUploadConfigVisible" :show-close="false" :close-on-click-modal="false"
       :close-on-press-escape="false" width="700px">
@@ -1419,10 +1411,6 @@ export default {
   color: #66758c; font-size: 14px; background: #fff; border: 1px solid #e1e8f0; border-radius: 12px;
 }
 .subconverter-page .compact-row strong { flex: 0 0 auto; color: #213654; }
-.subconverter-page .compact-help { margin-top: 12px; padding: 0 22px; background: #fff; border: 1px solid #e1e8f0; border-radius: 12px; }
-.subconverter-page .compact-help .el-collapse { border: 0; }
-.subconverter-page .compact-help .el-collapse-item__wrap { border-bottom: 0; }
-.subconverter-page .compact-help p { margin: 0; color: #65758b; line-height: 1.8; }
 @media (max-width: 700px) {
   .subconverter-page { padding: 20px 10px 42px; }
   .subconverter-page .converter-hero { padding: 24px 18px; border-radius: 12px; }
