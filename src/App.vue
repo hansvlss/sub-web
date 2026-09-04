@@ -51,7 +51,7 @@ body { color: #1f2329; font-family: Poppins, "Noto Sans SC", "PingFang SC", sans
 .is-embedded .subconverter-page { min-height: 0; padding-bottom: 0; }
 #app.is-embedded .subconverter-page .converter-card { box-shadow: none !important; }
 #app.is-embedded .site-footer { background: #fff; border: 0; }
-.embedded-footer-note { width: min(1160px, calc(100% - 40px)); margin: 0 auto; padding: 10px 0 14px; color: #62718a; font-size: 16px; text-align: center; }
+.embedded-footer-note { width: min(1160px, calc(100% - 40px)); margin: 0 auto; padding: 10px 0 14px; color: #62718a; font-size: 16px; letter-spacing: .04em; text-align: center; }
 .site-header { position: sticky; top: 0; z-index: 1000; background: rgba(255,255,255,.92); border-bottom: 1px solid #e8e9ec; backdrop-filter: blur(14px); }
 .site-header__inner { display: flex; align-items: center; justify-content: space-between; width: min(1180px, calc(100% - 32px)); min-height: 64px; margin: auto; }
 .site-brand { display: inline-flex; align-items: center; gap: 10px; color: #17191d; font-size: 17px; font-weight: 800; text-decoration: none; }
